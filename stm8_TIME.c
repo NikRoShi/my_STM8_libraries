@@ -41,6 +41,6 @@ uint32_t get_mcs(void) {
 
 // Блокирующая задержка на базе нашего таймера
 void delay(uint32_t ms) {
-    uint32_t start = get_milsec();
-    while ((get_milsec() - start) < ms);
+    uint32_t start = get_ms();
+    while ((get_ms() - start) < ms);
 }
