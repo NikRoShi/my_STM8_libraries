@@ -16,7 +16,7 @@ void init_TIME(void) {
     TIM4_SR = 0;
 }
 
-uint32_t get_milsec(void) {
+uint32_t get_ms(void) {
     uint32_t ms;
 
     disableInterrupts();
@@ -27,7 +27,7 @@ uint32_t get_milsec(void) {
 }
 
 // Микросекунды (расчет: полные мс * 1000 + текущие тики в регистре * 8)
-uint32_t get_micsec(void) {
+uint32_t get_mcs(void) {
     uint32_t ms;
     uint8_t ticks;
     

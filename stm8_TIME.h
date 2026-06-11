@@ -6,8 +6,8 @@
 
 void tick_TIME(void);
 void init_TIME(void);
-uint32_t get_milsec(void);
-uint32_t get_micsec(void);
+uint32_t get_ms(void);
+uint32_t get_mcs(void);
 void delay(uint32_t ms);
 
 /* прерывание для работы таймера
