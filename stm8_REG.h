@@ -30,31 +30,27 @@
 #define PD_CR2   (*(volatile unsigned char*)0x5013)
 
 /* ==== I2C ==== */
-#define I2C_CR1    (*(volatile uint8_t*)0x5210) // Управление 1
-#define I2C_CR2    (*(volatile uint8_t*)0x5211) // Управление 2
-#define I2C_FREQR  (*(volatile uint8_t*)0x5212) // Частота тактирования
-#define I2C_OARL   (*(volatile uint8_t*)0x5213) // Собственный адрес (Low)
-#define I2C_OARH   (*(volatile uint8_t*)0x5214) // Собственный адрес (High)
-#define I2C_DR     (*(volatile uint8_t*)0x5216) // Регистр данных
-#define I2C_SR1    (*(volatile uint8_t*)0x5217) // Статус 1
-#define I2C_SR2    (*(volatile uint8_t*)0x5218) // Статус 2
-#define I2C_SR3    (*(volatile uint8_t*)0x5219) // Статус 3
-#define I2C_CCRL   (*(volatile uint8_t*)0x521A) // Контроль скорости (Low)
-#define I2C_CCRH   (*(volatile uint8_t*)0x521B) // Контроль скорости (High)
-#define I2C_TRISER (*(volatile uint8_t*)0x521C) // Время нарастания сигнала
+#define I2C_CR1    (*(volatile uint8_t*)0x5210)
+#define I2C_CR2    (*(volatile uint8_t*)0x5211)
+#define I2C_FREQR    (*(volatile uint8_t*)0x5212)
+#define I2C_DR    (*(volatile uint8_t*)0x5216)
+#define I2C_SR1    (*(volatile uint8_t*)0x5217)
+#define I2C_SR2    (*(volatile uint8_t*)0x5218)
+#define I2C_SR3    (*(volatile uint8_t*)0x5219)
+#define I2C_CCRL    (*(volatile uint8_t*)0x521B)
+#define I2C_CCRH    (*(volatile uint8_t*)0x521C)
+#define I2C_TRISER    (*(volatile uint8_t*)0x521D)
 
-/* Флаги I2C_SR1 */
-#define I2C_SR1_TXE   7  // Регистр данных пуст
-#define I2C_SR1_RXNE  6  // Приемный регистр не пуст
-#define I2C_SR1_STOPF 4  // Обнаружен СТОП на шине
-#define I2C_SR1_BTF   2  // Байт передан полностью
-#define I2C_SR1_ADDR  1  // Адрес подтвержден (ACK получен)
-#define I2C_SR1_SB    0  // Старт отправлен
-
-/* Флаги I2C_CR2 */
-#define I2C_CR2_ACK   4  // Подтверждение (0 - NACK, 1 - ACK)
-#define I2C_CR2_STOP  1  // Генерация СТОП
-#define I2C_CR2_START 0  // Генерация СТАРТ
+#define I2C_CR1_PE (1 << 0)
+#define I2C_CR2_START (1 << 0)
+#define I2C_CR2_STOP (1 << 1)
+#define I2C_CR2_ACK (1 << 2)
+#define I2C_SR1_SB (1 << 0)
+#define I2C_SR1_ADDR (1 << 1)
+#define I2C_SR1_TXE (1 << 7)
+#define I2C_SR1_RXNE (1 << 6)
+#define I2C_SR1_BTF (1 << 2)
+#define I2C_SR2_AF (1 << 2)
 
 /* ==== UART ==== */
 #define UART1_SR  (*(volatile unsigned char*)0x5230)
