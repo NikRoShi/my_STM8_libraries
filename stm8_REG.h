@@ -1,6 +1,8 @@
 #ifndef STM8S_REG_H
 #define STM8S_REG_H
 
+#define F_CPU 16000000UL
+
 /* ==== PORT A ==== */
 #define PA_ODR   (*(volatile unsigned char*)0x5000)
 #define PA_IDR   (*(volatile unsigned char*)0x5001)

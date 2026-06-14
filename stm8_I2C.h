@@ -4,6 +4,9 @@
 #include <stdint.h>
 #include "stm8_REG.h"
 
+// скорость i2c 100кГц
+#define F_I2C 100000UL
 
+void init_I2C(void);
 
 #endif
