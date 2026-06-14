@@ -20,7 +20,7 @@ void init_I2C(void)
 	I2C_CR1 |= I2C_CR1_PE;	// включим модуль перед настройкой
 }
 
-uint8_t I2C_rollColl(uint8_t address)
+uint8_t I2C_Ping(uint8_t address)
 {
 	uint16_t timeout = 50000;
 	
@@ -28,14 +28,24 @@ uint8_t I2C_rollColl(uint8_t address)
 
 	while (!(I2C_SR1 & I2C_SR1_SB))	//ждём флага что старт сформирован
 	{
-		if (--timeout == 0) return 0;
+		if (--timeout == 0) 
+		{
+			I2C_CR2 |= I2C_CR2_STOP;
+			return 0;
+		}
 	}
-
-	I2C_DR = (address << 1);	//записываем в регистр данных адрес устройства к которому мы хотим обратиться и 0, что значит что мы хотим писать
+	
+	timeout = 50000;
+	
+	I2C_DR = (address << 1);	//записываем в регистр данных адрес устройства к которому мы хотим обратиться + 0, что значит что мы хотим write
 
 	while (!(I2C_SR1 & I2C_SR1_ADDR) && !(I2C_SR2 & I2C_SR2_AF))	//ждём либо флага подтверждения адреса либо ошибки подтверждения
 	{
-		if (--timeout == 0) return 0;
+		if (--timeout == 0) 
+		{
+			I2C_CR2 |= I2C_CR2_STOP;
+			return 0;
+		}
 	}
 	if (I2C_SR1 & I2C_SR1_ADDR)	//если адрес ответил 
 	{
