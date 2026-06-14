@@ -8,6 +8,6 @@
 #define F_I2C 100000UL
 
 void init_I2C(void);
-uint8_t I2C_Ping(uint8_t address);
+uint8_t ping_I2C(uint8_t address);
 
 #endif

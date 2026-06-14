@@ -20,7 +20,7 @@ void init_I2C(void)
 	I2C_CR1 |= I2C_CR1_PE;	// включим модуль перед настройкой
 }
 
-uint8_t I2C_Ping(uint8_t address)
+uint8_t ping_I2C(uint8_t address)
 {
 	uint16_t timeout = 50000;
 	
