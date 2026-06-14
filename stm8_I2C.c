@@ -1,12 +1,13 @@
 #include "stm8_I2C.h"
+#include "stm8_UART.h"
 
 void init_I2C(void) 
 {
 	uint16_t ccr;
 	ccr = F_CPU / (2UL * F_I2C);
 	
-	PB_DDR |= (1 << 4) | (1 << 5);  // настраиваем PB4 и PB5 как выход
-	PB_CR1 &= ~((1 << 4) | (1 << 5));	// настраиваем PB4 и PB5 открытый коллектор 
+	//PB_DDR |= (1 << 4) | (1 << 5);  // настраиваем PB4 и PB5 как выход
+	//PB_CR1 &= ~((1 << 4) | (1 << 5));	// настраиваем PB4 и PB5 открытый коллектор 
 		
 	I2C_CR1 &= ~I2C_CR1_PE;	// отключим модуль перед настройкой
 	
@@ -25,38 +26,58 @@ uint8_t ping_I2C(uint8_t address)
 	uint16_t timeout = 50000;
 	
 	I2C_CR2 |= I2C_CR2_START;	//даём старт на линии
-
+	sendString_UART("start");
+	sendLine_UART();
 	while (!(I2C_SR1 & I2C_SR1_SB))	//ждём флага что старт сформирован
 	{
 		if (--timeout == 0) 
 		{
+			sendString_UART("sb timeout");
+			sendLine_UART();
 			I2C_CR2 |= I2C_CR2_STOP;
 			return 0;
 		}
 	}
-	
+	sendString_UART("sb ok");
+	sendLine_UART();
 	timeout = 50000;
 	
 	I2C_DR = (address << 1);	//записываем в регистр данных адрес устройства к которому мы хотим обратиться + 0, что значит что мы хотим write
-
+	sendString_UART("adderss");
+	sendLine_UART();
 	while (!(I2C_SR1 & I2C_SR1_ADDR) && !(I2C_SR2 & I2C_SR2_AF))	//ждём либо флага подтверждения адреса либо ошибки подтверждения
 	{
 		if (--timeout == 0) 
 		{
+			sendString_UART("addr timeout");
+			sendLine_UART();
 			I2C_CR2 |= I2C_CR2_STOP;
 			return 0;
 		}
 	}
 	if (I2C_SR1 & I2C_SR1_ADDR)	//если адрес ответил 
 	{
+		sendString_UART("address ok");
+	sendLine_UART();
 		(void)I2C_SR1;	//сбрасываем как в RM
 		(void)I2C_SR3;
 		
 		I2C_CR2 |= I2C_CR2_STOP;	//даём стоп на линии
 		return 1;
 	}
+	sendString_UART("address nak");
+	sendLine_UART();
 		I2C_SR2 &= ~I2C_SR2_AF;	//если ошибка подтверждения
 		
 		I2C_CR2 |= I2C_CR2_STOP;	//формируем стоп на линии
 		return 0;
 }
+�1
+16
+80
+0
+17
+start
+sb ok
+adderss
+address ok
