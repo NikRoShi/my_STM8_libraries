@@ -8,5 +8,6 @@
 #define F_I2C 100000UL
 
 void init_I2C(void);
+uint8_t I2C_rollColl(uint8_t address);
 
 #endif
