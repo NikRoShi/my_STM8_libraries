@@ -13,5 +13,6 @@ void stop_I2C(void);
 uint8_t writeAddr_I2C(uint8_t address);
 uint8_t writeByte_I2C(uint8_t data);
 uint8_t ping_I2C(uint8_t address);
+uint8_t writeReg(uint8_t address, uint8_t reg, uint8_t data);
 
 #endif

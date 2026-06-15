@@ -91,11 +91,17 @@ uint8_t writeByte_I2C(uint8_t data)
 uint8_t ping_I2C(uint8_t address)
 {
 	if (start_I2C() == 0) return 0;
-	
-	if (writeAddr_I2C(address) == 0)
-	{
-		return 0;
-	} 
+	if (writeAddr_I2C(address) == 0) return 0; 
+	stop_I2C();
+	return 1;
+}
+
+uint8_t writeReg(uint8_t address, uint8_t reg, uint8_t data)
+{
+	if (start_I2C() == 0) return 0;
+	if (writeAddr_I2C(address) == 0) return 0;
+	if (writeByte_I2C(reg) == 0) return 0;
+	if (writeByte_I2C(data) == 0) return 0;
 	stop_I2C();
 	return 1;
 }
