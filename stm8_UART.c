@@ -20,7 +20,7 @@ void init_UART(uint32_t baudRate) {
 }
 
 void sendByte_UART(uint8_t byte) {
-	while(!(UART1_SR & (1 << 7))) {}
+	while(!(UART1_SR & (1 << 7)));
 	UART1_DR = byte;
 }	
 
@@ -73,9 +73,9 @@ void sendHex_UART(uint8_t num)
 	uint8_t high = (num >> 4) & 0x0F;
 	uint8_t low = num & 0x0F;
 	
-	if (high < 10) sendByte_UART(high + '0');
+	if (high <= 9) sendByte_UART(high + '0');
 	else sendByte_UART(high - 10 + 'A');
 	
-	if (low < 10) sendByte_UART(low + '0');
+	if (low <= 9) sendByte_UART(low + '0');
 	else sendByte_UART(low - 10 + 'A');
 }
