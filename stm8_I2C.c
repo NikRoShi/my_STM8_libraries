@@ -20,7 +20,7 @@ void init_I2C(void)
 	I2C_CR1 |= I2C_CR1_PE;	// включим модуль перед настройкой
 }
 
-uint8_t ping_I2C(uint8_t address)
+uint8_t start_I2C(void)
 {
 	uint16_t timeout = 50000;
 	
@@ -29,18 +29,26 @@ uint8_t ping_I2C(uint8_t address)
 	{
 		if (--timeout == 0) 
 		{
-			I2C_CR2 |= I2C_CR2_STOP;
 			return 0;
 		}
 	}
-	timeout = 50000;
+	return 1;
+}
+
+void stop_I2C(void)
+{
+	I2C_CR2 |= I2C_CR2_STOP;	//формируем стоп на линии
+}
+
+uint8_t writeAddr_I2C(uint8_t address)
+{
+	uint16_t timeout = 50000;
 	
 	I2C_DR = (address << 1);	//записываем в регистр данных адрес устройства к которому мы хотим обратиться + 0, что значит что мы хотим write
-	while (!(I2C_SR1 & I2C_SR1_ADDR) && !(I2C_SR2 & I2C_SR2_AF))	//ждём либо флага подтверждения адреса либо ошибки подтверждения
+	while (!(I2C_SR1 & I2C_SR1_ADDR) && !(I2C_SR2 & I2C_SR2_AF))
 	{
 		if (--timeout == 0) 
 		{
-			I2C_CR2 |= I2C_CR2_STOP;
 			return 0;
 		}
 	}
@@ -48,13 +56,9 @@ uint8_t ping_I2C(uint8_t address)
 	{
 		(void)I2C_SR1;	//сбрасываем как в RM
 		(void)I2C_SR3;
-		
-		I2C_CR2 |= I2C_CR2_STOP;	//даём стоп на линии
 		return 1;
 	}
-		I2C_SR2 &= ~I2C_SR2_AF;	//если ошибка подтверждения
-		
-		I2C_CR2 |= I2C_CR2_STOP;	//формируем стоп на линии
+		I2C_SR2 &= ~I2C_SR2_AF;	//иначе, сбрасываем ошибку подтверждения
 		return 0;
 }
 
@@ -76,5 +80,18 @@ uint8_t writeByte_I2C(uint8_t data)
 			return 0;
 		}
 	}
+	return 1;
+}
+
+uint8_t ping_I2C(uint8_t address)
+{
+	if (start_I2C() == 0) return 0;
+	
+	if (writeAddr_I2C(address) == 0)
+	{
+		stop_I2C();
+		return 0;
+	} 
+	stop_I2C();
 	return 1;
 }
