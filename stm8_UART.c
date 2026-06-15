@@ -70,7 +70,7 @@ uint8_t read_UART(void) {
 
 void sendHex_UART(uint8_t num)
 {
-	char hex[] = "0123456789ABCDEF";
+	static const char hex[] = "0123456789ABCDEF";
 	
 	sendByte_UART(hex[num >> 4]);
 	sendByte_UART(hex[num & 0x0F]);
