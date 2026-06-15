@@ -14,5 +14,6 @@ void sendLine_UART(void);
 void sendInt_UART(uint16_t num);
 uint8_t available_UART(void);
 uint8_t read_UART(void);
+void sendHex_UART(uint8_t num);
 
 #endif

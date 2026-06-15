@@ -67,3 +67,15 @@ uint8_t available_UART(void) {
 uint8_t read_UART(void) {
     return UART1_DR;           // Чтение DR автоматически сбрасывает флаг RXNE
 }
+
+void sendHex_UART(uint8_t num)
+{
+	uint8_t high = (num >> 4) & 0x0F;
+	uint8_t low = num & 0x0F;
+	
+	if (high < 10) sendByte_UART(high + '0');
+	else sendByte_UART(high - 10 + 'A');
+	
+	if (low < 10) sendByte_UART(low + '0');
+	else sendByte_UART(low - 10 + 'A');
+}
