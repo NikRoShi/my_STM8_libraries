@@ -57,3 +57,19 @@ uint8_t ping_I2C(uint8_t address)
 		I2C_CR2 |= I2C_CR2_STOP;	//формируем стоп на линии
 		return 0;
 }
+
+uint8_t writeByte_I2C(uint8_t data)
+{
+	uint16_t timeout = 50000;
+	
+	I2C_DR = data;	//записываем байт в реистр данных
+	
+	while(!(I2C_SR1 & I2C_SR1_TXE))	//ждём флага о том, что регистр данных опустел
+	{
+		if (I2C_SR2 & I2C_SR2_AF || --timeout == 0)	//если пришла ошибка или вышло время то возвращаем 0
+		{
+			return 0;
+		}
+	}
+	return 1;
+}
