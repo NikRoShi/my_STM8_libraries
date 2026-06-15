@@ -70,12 +70,8 @@ uint8_t read_UART(void) {
 
 void sendHex_UART(uint8_t num)
 {
-	uint8_t high = (num >> 4) & 0x0F;
-	uint8_t low = num & 0x0F;
+	char hex[] = "0123456789ABCDEF";
 	
-	if (high <= 9) sendByte_UART(high + '0');
-	else sendByte_UART(high - 10 + 'A');
-	
-	if (low <= 9) sendByte_UART(low + '0');
-	else sendByte_UART(low - 10 + 'A');
+	sendByte_UART(hex[num >> 4]);
+	sendByte_UART(hex[num & 0x0F]);
 }
