@@ -66,7 +66,12 @@ uint8_t writeByte_I2C(uint8_t data)
 	
 	while(!(I2C_SR1 & I2C_SR1_TXE))	//ждём флага о том, что регистр данных опустел
 	{
-		if (I2C_SR2 & I2C_SR2_AF || --timeout == 0)	//если пришла ошибка или вышло время то возвращаем 0
+		if (I2C_SR2 & I2C_SR2_AF)	//если пришёл NACK
+		{
+			I2C_SR2 &= ~I2C_SR2_AF;	//очищаем регистр ошибки
+			return 0;
+		}
+		if (--timeout == 0)	//проверка таймаута
 		{
 			return 0;
 		}
