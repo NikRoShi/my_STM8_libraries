@@ -41,11 +41,13 @@ uint8_t start_I2C(void)
 	return 1;
 }
 
-uint8_t writeAddr_I2C(uint8_t address)
+uint8_t writeAddr_I2C(uint8_t address, uint8_t mode)
 {
 	uint16_t timeout = 50000;
 	
-	I2C_DR = (address << 1);	//записываем в регистр данных адрес устройства к которому мы хотим обратиться + 0, что значит что мы хотим write
+	if (mode == WRITE) I2C_DR = (address << 1);
+	if (mode == READ) I2C_DR = (address << 1) | 0x01;
+	
 	while (!(I2C_SR1 & I2C_SR1_ADDR) && !(I2C_SR2 & I2C_SR2_AF))
 	{
 		if (--timeout == 0) 
@@ -91,7 +93,7 @@ uint8_t writeByte_I2C(uint8_t data)
 uint8_t ping_I2C(uint8_t address)
 {
 	if (start_I2C() == 0) return 0;
-	if (writeAddr_I2C(address) == 0) return 0; 
+	if (writeAddr_I2C(address, WRITE) == 0) return 0; 
 	stop_I2C();
 	return 1;
 }
@@ -99,9 +101,28 @@ uint8_t ping_I2C(uint8_t address)
 uint8_t writeReg(uint8_t address, uint8_t reg, uint8_t data)
 {
 	if (start_I2C() == 0) return 0;
-	if (writeAddr_I2C(address) == 0) return 0;
+	if (writeAddr_I2C(address, WRITE) == 0) return 0;
 	if (writeByte_I2C(reg) == 0) return 0;
 	if (writeByte_I2C(data) == 0) return 0;
 	stop_I2C();
 	return 1;
+}
+
+uint8_t readByte(uint8_t addres)
+{
+	uint16_t timeout = 50000;
+	
+	if (start_I2C() == 0) return 0;
+	if (writeAddr_I2C(adress, READ) == 0) return 0;
+	
+	while (!(I2C_SR1 & I2C_SR1_RXNE))
+	{
+		if (--timeout == 0) 
+		{
+			stop_I2C();
+			return 0;
+		}
+	}
+	stop_I2C();
+	return I2C_DR;
 }
