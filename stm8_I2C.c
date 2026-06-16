@@ -98,7 +98,7 @@ uint8_t ping_I2C(uint8_t address)
 	return 1;
 }
 
-uint8_t writeReg(uint8_t address, uint8_t reg, uint8_t data)
+uint8_t writeReg_I2C(uint8_t address, uint8_t reg, uint8_t data)
 {
 	if (start_I2C() == 0) return 0;
 	if (writeAddr_I2C(address, WRITE) == 0) return 0;
@@ -108,12 +108,14 @@ uint8_t writeReg(uint8_t address, uint8_t reg, uint8_t data)
 	return 1;
 }
 
-uint8_t readByte(uint8_t addres)
+uint8_t readByte_I2C(uint8_t address, uint8_t *data)
 {
 	uint16_t timeout = 50000;
 	
 	if (start_I2C() == 0) return 0;
-	if (writeAddr_I2C(adress, READ) == 0) return 0;
+	if (writeAddr_I2C(address, READ) == 0) return 0;
+	
+	I2C_CR2 &= ~I2C_CR2_ACK;
 	
 	while (!(I2C_SR1 & I2C_SR1_RXNE))
 	{
@@ -123,6 +125,8 @@ uint8_t readByte(uint8_t addres)
 			return 0;
 		}
 	}
+	data = I2C_DR;
 	stop_I2C();
-	return I2C_DR;
+	I2C_CR2 |= I2C_CR2_ACK;
+	return 1;
 }
