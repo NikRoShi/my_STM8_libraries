@@ -113,9 +113,10 @@ uint8_t readByte_I2C(uint8_t address, uint8_t *data)
 	uint16_t timeout = 50000;
 	
 	if (start_I2C() == 0) return 0;
-	if (writeAddr_I2C(address, READ) == 0) return 0;
 	
 	I2C_CR2 &= ~I2C_CR2_ACK;
+	
+	if (writeAddr_I2C(address, READ) == 0) return 0;
 	
 	while (!(I2C_SR1 & I2C_SR1_RXNE))
 	{
@@ -125,7 +126,7 @@ uint8_t readByte_I2C(uint8_t address, uint8_t *data)
 			return 0;
 		}
 	}
-	data = I2C_DR;
+	*data = I2C_DR;
 	stop_I2C();
 	I2C_CR2 |= I2C_CR2_ACK;
 	return 1;
