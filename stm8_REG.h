@@ -63,6 +63,11 @@
 #define UART1_CR2  (*(volatile unsigned char*)0x5235)
 #define UART1_CR3  (*(volatile unsigned char*)0x5236)
 
+#define UART1_SR_TXE (1 << 7)
+#define UART1_SR_RXNE (1 << 5)
+#define UART1_CR2_TEN (1 << 3)
+#define UART1_CR2_REN (1 << 2)
+
 /* ==== TIM2 ==== */
 #define TIM2_CR1  (*(volatile unsigned char*)0x5300)
 #define TIM2_IER  (*(volatile unsigned char*)0x5303)
