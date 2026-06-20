@@ -61,3 +61,9 @@ uint8_t printInt_UART(uint16_t num)
 	}
 	return 1;
 }
+uint8_t line_UART(void)
+{
+	if (write_UART('\r') == 0) return 0;
+	if (write_UART('\n') == 0) return 0;
+	return 1;
+}
