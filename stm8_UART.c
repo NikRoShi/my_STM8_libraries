@@ -48,20 +48,16 @@ uint8_t printInt_UART(uint16_t num)
 		write_UART('0');
 		return 1;
 	}
-	else
+	while (num != 0)
 	{
-		while (num != 0)
-		{
-			buf[i] = num % 10;
-			num /= 10;
-			i++;
-		}
-		while (i > 0)
-		{
-			i--;
-			if (write_UART(buf[i] + '0'));
-			else return 0;
-		}
-		return 1;
+		buf[i] = (num % 10) + '0';
+		num /= 10;
+		i++;
 	}
+	while (i > 0)
+	{
+		i--;
+		if (write_UART(buf[i]) == 0) return 0;
+	}
+	return 1;
 }
