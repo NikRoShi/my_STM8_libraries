@@ -10,8 +10,8 @@
 void init_UART(uint16_t baudrate);
 uint8_t write_UART(uint8_t data);
 uint8_t print_UART(char *str);
-uint8_t printInt_UART(uint16_t int);
+uint8_t printInt_UART(uint16_t data);
 uint8_t line_UART(void);
-uint8_t printHex_UART(uint8_t hex);
+uint8_t printHex_UART(uint8_t data);
 
 #endif

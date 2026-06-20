@@ -38,20 +38,20 @@ uint8_t print_UART(char *str)
 	}
 	return 1;
 }
-uint8_t printInt_UART(uint16_t num)
+uint8_t printInt_UART(uint16_t data)
 {
 	char buf[5];
 	uint8_t i = 0;
 	
-	if (num == 0)
+	if (data == 0)
 	{
 		write_UART('0');
 		return 1;
 	}
-	while (num != 0)
+	while (data != 0)
 	{
-		buf[i] = (num % 10) + '0';
-		num /= 10;
+		buf[i] = (data % 10) + '0';
+		data /= 10;
 		i++;
 	}
 	while (i > 0)
