@@ -67,3 +67,17 @@ uint8_t line_UART(void)
 	if (write_UART('\n') == 0) return 0;
 	return 1;
 }
+static char nibbleToHex(uint8_t nibble)
+{
+	if (nibble < 10) return nibble + '0';
+	else return nibble - 10 + 'A';
+}
+uint8_t printHex_UART(uint8_t hex)
+{
+	uint8_t high = hex >> 4;
+	uint8_t low = hex & 0x0F;
+	
+	if (write_UART(nibbleToHex(high)) == 0) return 0;
+	if (write_UART(nibbleToHex(low)) == 0) return 0;
+	return 1;
+}
