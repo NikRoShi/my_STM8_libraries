@@ -8,6 +8,6 @@
 #define RX_PIN 6
 
 void init_UART(uint16_t baudrate);
-void write_UART(uint8_t data);
+uint8_t write_UART(uint8_t data);
 
 #endif

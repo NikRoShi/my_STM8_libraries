@@ -14,7 +14,15 @@ void init_UART(uint16_t baudrate)
 	
 	UART1_CR2 |= UART1_CR2_TEN;
 }
-void write_UART(uint8_t data)
+uint8_t write_UART(uint8_t data)
 {
+	uint16_t timeout = 50000;
 	
+	while (!(UART1_SR & UART1_SR_TXE))
+	{
+		if (--timeout = 0) return 0;
+	}
+	
+	UART1_DR = data;
+	return 1;
 }
