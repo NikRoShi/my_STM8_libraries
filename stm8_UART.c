@@ -4,15 +4,13 @@ void init_UART(uint16_t baudrate)
 {
 	uint16_t uartdiv;
 	
-	PD_DDR |= (1 << TX_PIN);
-	PD_CR1 |= (1 << TX_PIN);
-	
 	uartdiv = F_CPU / baudrate;
 	
 	UART1_BRR2 = (uartdiv & 0x000F) | ((uartdiv >> 8) & 0x00F0);
 	UART1_BRR1 = (uartdiv >> 4) & 0x00FF;
 	
 	UART1_CR2 |= UART1_CR2_TEN;
+	UART1_CR2 |= UART1_CR2_REN;
 }
 uint8_t write_UART(uint8_t data)
 {
@@ -80,4 +78,13 @@ uint8_t printHex_UART(uint8_t data)
 	if (write_UART(nibbleToHex(high)) == 0) return 0;
 	if (write_UART(nibbleToHex(low)) == 0) return 0;
 	return 1;
+}
+uint8_t isDataReceived_UART(void)
+{
+	if (UART1_SR & UART1_SR_RXNE == 0) return 0;
+	return 1;
+}
+uint8_t getData_UART(void)
+{
+	return UART1_DR;
 }

@@ -13,5 +13,7 @@ uint8_t print_UART(char *str);
 uint8_t printInt_UART(uint16_t data);
 uint8_t line_UART(void);
 uint8_t printHex_UART(uint8_t data);
+uint8_t isDataReceived_UART(void);
+uint8_t getData_UART(void);
 
 #endif
