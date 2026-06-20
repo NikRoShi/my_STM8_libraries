@@ -20,7 +20,7 @@ uint8_t write_UART(uint8_t data)
 	
 	while (!(UART1_SR & UART1_SR_TXE))
 	{
-		if (--timeout = 0) return 0;
+		if (--timeout == 0) return 0;
 	}
 	
 	UART1_DR = data;
