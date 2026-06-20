@@ -26,3 +26,15 @@ uint8_t write_UART(uint8_t data)
 	UART1_DR = data;
 	return 1;
 }
+uint8_t print_UART(char *str)
+{
+	while(*str != 0)
+	{
+		if(write_UART(*str) == 1)
+		{
+			str++;
+		}
+		else return 0;
+	}
+	return 1;
+}
