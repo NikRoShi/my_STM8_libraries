@@ -81,7 +81,7 @@ uint8_t printHex_UART(uint8_t data)
 }
 uint8_t isDataReceived_UART(void)
 {
-	if (UART1_SR & UART1_SR_RXNE == 0) return 0;
+	if ((UART1_SR & UART1_SR_RXNE) == 0) return 0;
 	return 1;
 }
 uint8_t getData_UART(void)
