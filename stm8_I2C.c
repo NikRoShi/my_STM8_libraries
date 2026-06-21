@@ -115,11 +115,13 @@ uint8_t readByte_I2C(uint8_t address, uint8_t *data)
 	
 	if (start_I2C() == 0) return 0;
 	
-	I2C_CR2 &= ~I2C_CR2_ACK;
-	
 	if (writeAddr_I2C(address, READ) == 0) return 0;
 	
+	I2C_CR2 &= ~I2C_CR2_ACK;
+	
 	clearADDR_I2C();
+	
+	stop_I2C();
 	
 	while (!(I2C_SR1 & I2C_SR1_RXNE))
 	{
@@ -131,7 +133,6 @@ uint8_t readByte_I2C(uint8_t address, uint8_t *data)
 	}
 	*data = I2C_DR;
 	I2C_CR2 |= I2C_CR2_ACK;
-	stop_I2C();
 	return 1;
 }
 uint8_t readReg_I2C(uint8_t address, uint8_t reg, uint8_t *data)
