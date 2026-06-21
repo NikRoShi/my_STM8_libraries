@@ -18,5 +18,6 @@ uint8_t writeByte_I2C(uint8_t data);
 uint8_t ping_I2C(uint8_t address);
 uint8_t writeReg_I2C(uint8_t address, uint8_t reg, uint8_t data);
 uint8_t readByte_I2C(uint8_t address, uint8_t *data);
+uint8_t readReg_I2C(uint8_t address, uint8_t reg, uint8_t *data);
 
 #endif
