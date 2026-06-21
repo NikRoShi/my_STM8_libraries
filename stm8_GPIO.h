@@ -13,10 +13,7 @@
 #define OUTPUT_FAST 1
 #define INPUT 2
 #define INPUT_PULLUP 3
-#define OUTPUT_OD 4
-
-#define HIGH 1
-#define LOW 0 
+#define OUTPUT_OD 4 
 
 void pinMode(volatile uint8_t* port, uint8_t pin, uint8_t mode);
 void writePin(volatile uint8_t* port, uint8_t pin, uint8_t state);

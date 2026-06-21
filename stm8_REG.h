@@ -3,6 +3,9 @@
 
 #define F_CPU 16000000UL
 
+#define HIGH 1
+#define LOW 0
+
 /* ==== PORT A ==== */
 #define PA_ODR   (*(volatile unsigned char*)0x5000)
 #define PA_IDR   (*(volatile unsigned char*)0x5001)

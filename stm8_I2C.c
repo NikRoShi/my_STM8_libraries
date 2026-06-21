@@ -42,6 +42,11 @@ void clearADDR_I2C(void)
 	(void)I2C_SR1;
 	(void)I2C_SR3;
 }
+void setACK_I2C(uint8_t state)
+{
+	if (state == LOW) I2C_CR2 &= ~I2C_CR2_ACK;
+	I2C_CR2 |= I2C_CR2_ACK;
+}
 uint8_t writeAddr_I2C(uint8_t address, uint8_t mode)
 {
 	uint16_t timeout = 50000;
@@ -101,10 +106,14 @@ uint8_t ping_I2C(uint8_t address)
 uint8_t writeReg_I2C(uint8_t address, uint8_t reg, uint8_t data)
 {
 	if (start_I2C() == 0) return 0;
+	
 	if (writeAddr_I2C(address, WRITE) == 0) return 0;
 	clearADDR_I2C();
+	
 	if (writeByte_I2C(reg) == 0) return 0;
+	
 	if (writeByte_I2C(data) == 0) return 0;
+	
 	stop_I2C();
 	return 1;
 }
@@ -117,7 +126,7 @@ uint8_t readByte_I2C(uint8_t address, uint8_t *data)
 	
 	if (writeAddr_I2C(address, READ) == 0) return 0;
 	
-	I2C_CR2 &= ~I2C_CR2_ACK;
+	setACK_I2C(LOW);
 	
 	clearADDR_I2C();
 	
@@ -132,7 +141,9 @@ uint8_t readByte_I2C(uint8_t address, uint8_t *data)
 		}
 	}
 	*data = I2C_DR;
-	I2C_CR2 |= I2C_CR2_ACK;
+	
+	setACK_I2C(HIGH);
+	
 	return 1;
 }
 uint8_t readReg_I2C(uint8_t address, uint8_t reg, uint8_t *data)
@@ -151,7 +162,7 @@ uint8_t readReg_I2C(uint8_t address, uint8_t reg, uint8_t *data)
 	
 	if (writeAddr_I2C(address, READ) == 0) return 0;
 		
-	I2C_CR2 &= ~I2C_CR2_ACK;
+	setACK_I2C(LOW);
 	
 	clearADDR_I2C();
 	
@@ -166,6 +177,44 @@ uint8_t readReg_I2C(uint8_t address, uint8_t reg, uint8_t *data)
 		}
 	}
 	*data = I2C_DR;
-	I2C_CR2 |= I2C_CR2_ACK;
+	
+	setACK_I2C(HIGH);
+	
 	return 1;
+}
+uint8_t readBuffer2_I2C(uint8_t address, uint8_t reg, uint8_t *buf)
+{
+	uint16_t timeout = 50000;
+	
+	if (start_I2C() == 0) return 0;
+	
+	if (writeAddr_I2C(address, WRITE) == 0) return 0;
+	clearADDR_I2C();
+	
+	if (writeByte_I2C(reg) == 0) return 0;
+	
+	if (start_I2C() == 0) return 0;
+	
+	if (writeAddr_I2C(address, READ) == 0) return 0;
+	setACK_I2C(HIGH);
+	clearADDR_I2C();
+	
+	while (!(I2C_SR1 & I2C_SR1_BTF))
+	{
+		if (--timeout == 0)
+		{
+			stop_I2C();
+			return 0;
+		}
+	}
+	stop_I2C();
+	
+	*buf[0] = I2C_DR;
+	*buf[1] = I2C_DR;
+	
+	return 1;
+}
+uint8_t readBuffer_I2C(uint8_t address, uint8_t reg, uint8_t *buf, uint8_t size)
+{
+	
 }
