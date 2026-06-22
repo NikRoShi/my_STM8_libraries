@@ -232,7 +232,7 @@ uint8_t readBuffer_I2C(uint8_t address, uint8_t reg, uint8_t *buf, uint8_t size)
 	
 	if (size == 1) 
 	{
-		if (readReg_I2C(address, reg, &buf) == 0) return 0;
+		if (readReg_I2C(address, reg, buf) == 0) return 0;
 		return 1;
 	}
 	if (size == 2)
@@ -245,17 +245,15 @@ uint8_t readBuffer_I2C(uint8_t address, uint8_t reg, uint8_t *buf, uint8_t size)
 	if (writeAddr_I2C(address, WRITE) == 0) return 0;
 	clearADDR_I2C();
 	
-	if (writeReg_I2C(reg) == 0) return 0;
+	if (writeByte_I2C(reg) == 0) return 0;
 	
 	if (start_I2C() == 0) return 0;
 	
 	if (writeAddr_I2C(address, READ) == 0) return 0;
 	clearADDR_I2C();
 	
-	if (size > 3)
-	{
-		size--;
-		
+	while (size > 3)
+	{	
 		while (!(I2C_SR1 & I2C_SR1_RXNE))
 		{
 			if (--timeout == 0)
@@ -268,49 +266,38 @@ uint8_t readBuffer_I2C(uint8_t address, uint8_t reg, uint8_t *buf, uint8_t size)
 		buf[i] = I2C_DR;
 		i++;
 	}
-	else
+
+	while (!(I2C_SR1 & I2C_SR1_BTF))
 	{
-		while (!(I2C_SR1 & I2C_SR1_BTF))
+		if (--timeout == 0)
 		{
-			if (--timeout == 0)
-			{
-				stop_I2C();
-				return 0;
-			}
+			stop_I2C();
+			return 0;
 		}
-		timeout = 50000;
-		
-		setACK_I2C(LOW);
-		
-		buf[i] = I2C_DR;
-		i++;
-		
-		stop_I2C();
-		
-		while (!(I2C_SR1 & I2C_SR1_RXNE))
-		{
-			if (--timeout == 0)
-			{
-				stop_I2C();
-				return 0
-			}
-		}
-		timeout = 50000;
-		buf[i] = I2C_DR;
-		i++;
-		
-		while (!(I2C_SR1 & I2C_SR1_RXNE))
-		{
-			if (--timeout == 0)
-			{
-				stop_I2C();
-				return 0
-			}
-		}
-		buf[i] = I2C_DR;
 	}
-	
+	timeout = 50000;
+			
+	setACK_I2C(LOW);
+			
+	buf[i] = I2C_DR;
+	i++;
+			
+	stop_I2C();
+
+	buf[i] = I2C_DR;
+	i++;
+			
+	while (!(I2C_SR1 & I2C_SR1_RXNE))
+	{
+		if (--timeout == 0)
+		{
+			stop_I2C();
+			return 0
+		}
+	}
+	buf[i] = I2C_DR;
+		
 	setACK_I2C(HIGH);
-	
+		
 	return 1;
 }
