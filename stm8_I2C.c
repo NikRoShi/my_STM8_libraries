@@ -45,7 +45,7 @@ void clearADDR_I2C(void)
 void setACK_I2C(uint8_t state)
 {
 	if (state == LOW) I2C_CR2 &= ~I2C_CR2_ACK;
-	else I2C_CR2 |= I2C_CR2_ACK;
+	if (state == HIGH) I2C_CR2 |= I2C_CR2_ACK;
 }
 uint8_t writeAddr_I2C(uint8_t address, uint8_t mode)
 {
@@ -197,6 +197,16 @@ uint8_t readBuffer2_I2C(uint8_t address, uint8_t reg, uint8_t *buf)
 	
 	if (writeAddr_I2C(address, READ) == 0) return 0;
 	clearADDR_I2C();
+	
+	while (!(I2C_SR1 & I2C_SR1_RXNE))
+	{
+		if (--timeout == 0)
+		{
+			stop_I2C();
+			return 0;
+		}
+	}
+	buf[0] = I2C_DR;
 	setACK_I2C(LOW);
 	
 	while (!(I2C_SR1 & I2C_SR1_BTF))
@@ -209,8 +219,9 @@ uint8_t readBuffer2_I2C(uint8_t address, uint8_t reg, uint8_t *buf)
 	}
 	stop_I2C();
 	
-	buf[0] = I2C_DR;
 	buf[1] = I2C_DR;
+	
+	setACK_I2C(HIGH);
 	
 	return 1;
 }
