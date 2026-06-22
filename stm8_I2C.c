@@ -122,6 +122,8 @@ uint8_t readByte_I2C(uint8_t address, uint8_t *data)
 {
 	uint16_t timeout = 50000;
 	
+	setACK_I2C(HIGH);
+	
 	if (start_I2C() == 0) return 0;
 	
 	if (writeAddr_I2C(address, READ) == 0) return 0;
@@ -142,13 +144,13 @@ uint8_t readByte_I2C(uint8_t address, uint8_t *data)
 	}
 	*data = I2C_DR;
 	
-	setACK_I2C(HIGH);
-	
 	return 1;
 }
 uint8_t readReg_I2C(uint8_t address, uint8_t reg, uint8_t *data)
 {
 	uint16_t timeout = 50000;
+	
+	setACK_I2C(HIGH);
 	
 	if (start_I2C() == 0) return 0;
 	
@@ -178,13 +180,13 @@ uint8_t readReg_I2C(uint8_t address, uint8_t reg, uint8_t *data)
 	}
 	*data = I2C_DR;
 	
-	setACK_I2C(HIGH);
-	
 	return 1;
 }
 uint8_t readBuffer2_I2C(uint8_t address, uint8_t reg, uint8_t *buf)
 {
 	uint16_t timeout = 50000;
+	
+	setACK_I2C(HIGH);
 	
 	if (start_I2C() == 0) return 0;
 	
@@ -221,14 +223,14 @@ uint8_t readBuffer2_I2C(uint8_t address, uint8_t reg, uint8_t *buf)
 	
 	buf[1] = I2C_DR;
 	
-	setACK_I2C(HIGH);
-	
 	return 1;
 }
 uint8_t readBuffer_I2C(uint8_t address, uint8_t reg, uint8_t *buf, uint8_t size)
 {
 	uint16_t timeout = 50000;
 	uint8_t i = 0;
+	
+	setACK_I2C(HIGH);
 	
 	if (size == 1) 
 	{
@@ -297,8 +299,6 @@ uint8_t readBuffer_I2C(uint8_t address, uint8_t reg, uint8_t *buf, uint8_t size)
 		}
 	}
 	buf[i] = I2C_DR;
-		
-	setACK_I2C(HIGH);
 		
 	return 1;
 }
