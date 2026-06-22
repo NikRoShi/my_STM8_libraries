@@ -259,7 +259,7 @@ uint8_t readBuffer_I2C(uint8_t address, uint8_t reg, uint8_t *buf, uint8_t size)
 			if (--timeout == 0)
 			{
 				stop_I2C();
-				return 0
+				return 0;
 			}
 		}
 		timeout = 50000;
@@ -293,7 +293,7 @@ uint8_t readBuffer_I2C(uint8_t address, uint8_t reg, uint8_t *buf, uint8_t size)
 		if (--timeout == 0)
 		{
 			stop_I2C();
-			return 0
+			return 0;
 		}
 	}
 	buf[i] = I2C_DR;
