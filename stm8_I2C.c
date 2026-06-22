@@ -265,6 +265,7 @@ uint8_t readBuffer_I2C(uint8_t address, uint8_t reg, uint8_t *buf, uint8_t size)
 		timeout = 50000;
 		buf[i] = I2C_DR;
 		i++;
+		size--;
 	}
 
 	while (!(I2C_SR1 & I2C_SR1_BTF))
