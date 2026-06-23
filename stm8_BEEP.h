@@ -4,9 +4,9 @@
 #include <stdint.h>
 #include "stm8_REG.h"
 
-#define KHZ1 0
-#define KHZ2 1
-#define KHZ4 2
+#define BEEP_1KHZ 0
+#define BEEP_2KHZ 1
+#define BEEP_4KHZ 2
 
 void init_BEEP(uint8_t freq);
 void beep(uint8_t state);
