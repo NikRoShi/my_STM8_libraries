@@ -113,6 +113,14 @@
 #define CLK_PCKENR1 (*(volatile unsigned char*)0x50C7)
 #define CLK_PCKENR2 (*(volatile unsigned char*)0x50CA)
 
+/* ==== BEEP ==== */
+
+#define BEEP_CSR (*(volatile unsigned char*)0x50F3)
+
+#define BEEP_CSR_BEEPEN (1 << 5)
+#define BEEP_CSR_BEEPSEL 6
+#define BEEP_CSR_BEEPDIV 0
+
 /* ==== INTERRUPTS ==== */
 #define enableInterrupts()  __asm__("rim")
 #define disableInterrupts() __asm__("sim")
