@@ -4,9 +4,9 @@
 #include <stdint.h>
 #include "stm8_REG.h"
 
-#define PD4 1
-#define PD3 2
-#define PA3 3
+#define PWM_CH1 1
+#define PWM_CH2 2
+#define PWM_CH3 3
 
 void init_PWM(uint16_t period);
 void startChannel_PWM(uint8_t channel);

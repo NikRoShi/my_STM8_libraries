@@ -31,17 +31,17 @@ void init_PWM(uint16_t period) {	// period = Fmaster / Fpwm (для удобст
 
 void startChannel_PWM(uint8_t channel) {	//функция разрешает вывод на соответствующий пин
 	switch (channel) {
-		case 1:		//PD4
+		case PWM_CH1:		//PD4
 			PD_DDR |= (1 << 4);
 			PD_CR1 |= (1 << 4);
 			TIM2_CCER1 |= (1 << 0);	
 			break;
-		case 2:		//PD3
+		case PWM_CH2:		//PD3
 			PD_DDR |= (1 << 3);
 			PD_CR1 |= (1 << 3);
 			TIM2_CCER1 |= (1 << 4);	
 			break;
-		case 3:		//PA3
+		case PWM_CH3:		//PA3
 			PA_DDR |= (1 << 3);
 			PA_CR1 |= (1 << 3);
 			TIM2_CCER2 |= (1 << 0);	
@@ -52,13 +52,13 @@ void startChannel_PWM(uint8_t channel) {	//функция разрешает в�
 
 void stopChannel_PWM(uint8_t channel) {		//функция запрещает вывод на соответствующий пин
 	switch (channel) {
-		case 1:		//PD4
+		case PWM_CH1:		//PD4
 			TIM2_CCER1 &= ~(1 << 0);
 			break;
-		case 2:		//PD3
+		case PWM_CH2:		//PD3
 			TIM2_CCER1 &= ~(1 << 4);
 			break;
-		case 3:		//PA3
+		case PWM_CH3:		//PA3
 			TIM2_CCER2 &= ~(1 << 0);
 			break;
 		
@@ -67,15 +67,15 @@ void stopChannel_PWM(uint8_t channel) {		//функция запрещает в�
 
 void write_PWM(uint8_t channel, uint16_t value) {
 	switch (channel) {
-		case 1:
+		case PWM_CH1:
 			TIM2_CCR1H = (uint8_t)(value >> 8);
 			TIM2_CCR1L = (uint8_t)(value & 0xFF);
 			break;
-		case 2:
+		case PWM_CH2:
 			TIM2_CCR2H = (uint8_t)(value >> 8);
 			TIM2_CCR2L = (uint8_t)(value & 0xFF);
 			break;
-		case 3:
+		case PWM_CH3:
 			TIM2_CCR3H = (uint8_t)(value >> 8);
 			TIM2_CCR3L = (uint8_t)(value & 0xFF);
 			break;
