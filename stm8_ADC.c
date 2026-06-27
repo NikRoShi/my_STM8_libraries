@@ -1,4 +1,3 @@
-#include <stdint.h>
 #include "stm8_ADC.h"
 
 void init_ADC(uint8_t channel) {
