@@ -11,7 +11,7 @@ uint32_t get_mcs(void);
 void delay(uint32_t ms);
 
 /* прерывание для работы таймера
-void TIM4_UPD_OVF_IRQHandler(void) __interrupt(23) {
+void TIM4_UPD_OVF_IRQHandler(void) __interrupt(IRQ_TIM4) {
     TIM4_SR &= ~(1 << 0);
     tick_TIME();
 }
