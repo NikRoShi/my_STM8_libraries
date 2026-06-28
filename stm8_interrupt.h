@@ -23,12 +23,12 @@ void setMode(uint8_t port, uint8_t mode);
 void setPriority(uint8_t interrupt, uint8_t level);
 
 /*	шаблон для обработчика перывания exti
-PORTA 3
-PORTB 4
-PORTC 5
-PORTD 6
+PORTA IRQ_EXTI0
+PORTB IRQ_EXTI1
+PORTC IRQ_EXTI2
+PORTD IRQ_EXTI3
 
-ЗАМЕНИТЬ ВОПРОСЫ НА БУКВУ ПОРТА
+ЗАМЕНИТЬ ВОПРОСЫ!!!
 
 void EXTI_PORT?_IRQHandler(void) __interrupt(?)
 {
