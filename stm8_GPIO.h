@@ -4,10 +4,10 @@
 #include <stdint.h>
 #include "stm8_REG.h"
 
-#define PORTA &PA_ODR
-#define PORTB &PB_ODR
-#define PORTC &PC_ODR
-#define PORTD &PD_ODR
+#define PA &PA_ODR
+#define PB &PB_ODR
+#define PC &PC_ODR
+#define PD &PD_ODR
 
 #define OUTPUT 0
 #define OUTPUT_FAST 1
