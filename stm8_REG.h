@@ -121,7 +121,42 @@
 #define BEEP_CSR_BEEPSEL 6
 #define BEEP_CSR_BEEPDIV 0
 
+/* ==== ITC & EXTI ==== */
+
+#define EXTI_CR1 (*(volatile unsigned char*)0x50A0)
+#define EXTI_CR2 (*(volatile unsigned char*)0x50A1)
+
+#define ITC_SPR1 (*(volatile unsigned char*)0x7F70)
+#define ITC_SPR2 (*(volatile unsigned char*)0x7F71)
+#define ITC_SPR3 (*(volatile unsigned char*)0x7F72)
+#define ITC_SPR4 (*(volatile unsigned char*)0x7F73)
+#define ITC_SPR5 (*(volatile unsigned char*)0x7F74)
+#define ITC_SPR6 (*(volatile unsigned char*)0x7F75)
+#define ITC_SPR7 (*(volatile unsigned char*)0x7F76)
+#define ITC_SPR8 (*(volatile unsigned char*)0x7F77)
+
 /* ==== INTERRUPTS ==== */
+
+#define IRQ_TLI 0
+#define IRQ_AWU 1
+#define IRQ_CLK 2
+#define IRQ_EXTI0 3
+#define IRQ_EXTI1 4
+#define IRQ_EXTI2 5
+#define IRQ_EXTI3 6
+#define IRQ_EXTI4 7
+#define IRQ_SPI 10
+#define IRQ_TIM1_UPDATE 11
+#define IRQ_TIM1_CAPTURE 12
+#define IRQ_TIM2_UPDATE 13
+#define IRQ_TIM2_CAPTURE 14
+#define IRQ_UART1_TX 17
+#define IRQ_UART1_RX 18
+#define IRQ_I2C 19
+#define IRQ_ADC1 22
+#define IRQ_TIM4 23
+#define IRQ_FLASH 24
+
 #define enableInterrupts()  __asm__("rim")
 #define disableInterrupts() __asm__("sim")
 
