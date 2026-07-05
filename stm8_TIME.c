@@ -14,6 +14,7 @@ void init_TIME(void) {
 	TIM4_IER |= 0x01;
     TIM4_CR1 |= (1 << 0);
     TIM4_SR = 0;
+	enableInterrupts();
 }
 
 uint32_t get_ms(void) {
