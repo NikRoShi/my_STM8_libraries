@@ -40,6 +40,10 @@
 #define SPI_SR    (*(volatile uint8_t*)0x5203)
 #define SPI_DR    (*(volatile uint8_t*)0x5204)
 
+#define SPI_SR_RXNE (1 << 0)
+#define SPI_SR_TXE (1 << 1)
+#define SPI_SR_BSY (1 << 7)
+
 /* ==== I2C ==== */
 #define I2C_CR1    (*(volatile uint8_t*)0x5210)
 #define I2C_CR2    (*(volatile uint8_t*)0x5211)
