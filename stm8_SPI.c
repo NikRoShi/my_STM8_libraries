@@ -26,5 +26,11 @@ uint8_t exchange_SPI(uint8_t data)
 	{
 		if (--timeout == 0) return 0;
 	}
+	timeout = 50000;
+	
+	while (!(SPI_SR & SPI_SR_BSY))
+	{
+		if (--timeout == 0) return 0;
+	}
 	return SPI_DR;
 }
