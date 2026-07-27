@@ -34,6 +34,12 @@
 #define PD_CR1   (*(volatile unsigned char*)0x5012)
 #define PD_CR2   (*(volatile unsigned char*)0x5013)
 
+/* ==== SPI ==== */
+#define SPI_CR1    (*(volatile uint8_t*)0x5200)
+#define SPI_CR2    (*(volatile uint8_t*)0x5201)
+#define SPI_SR    (*(volatile uint8_t*)0x5203)
+#define SPI_DR    (*(volatile uint8_t*)0x5204)
+
 /* ==== I2C ==== */
 #define I2C_CR1    (*(volatile uint8_t*)0x5210)
 #define I2C_CR2    (*(volatile uint8_t*)0x5211)
