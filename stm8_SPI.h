@@ -26,5 +26,7 @@
 
 void init_SPI(uint8_t mode, uint8_t div, uint8_t firstBit, uint8_t masterSlave);
 uint8_t exchange_SPI(uint8_t data);
+void write_SPI(uint8_t data);
+uint8_t read_SPI(void);
 
 #endif

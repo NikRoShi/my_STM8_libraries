@@ -34,3 +34,11 @@ uint8_t exchange_SPI(uint8_t data)
 	}
 	return SPI_DR;
 }
+void write_SPI(uint8_t data)
+{
+	exchange_SPI(data);
+}
+uint8_t read_SPI(void)
+{
+	return exchange_SPI(0xFF);
+}
