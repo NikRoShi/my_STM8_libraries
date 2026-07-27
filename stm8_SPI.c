@@ -28,15 +28,17 @@ uint8_t exchange_SPI(uint8_t data)
 	}
 	timeout = 50000;
 	
-	while (!(SPI_SR & SPI_SR_BSY))
+	uint8_t result = SPI_DR;
+	
+	while (SPI_SR & SPI_SR_BSY)
 	{
 		if (--timeout == 0) return 0;
 	}
-	return SPI_DR;
+	return result;
 }
 void write_SPI(uint8_t data)
 {
-	exchange_SPI(data);
+	(void)exchange_SPI(data);
 }
 uint8_t read_SPI(void)
 {
