@@ -7,9 +7,10 @@
 
 #define DISPLAY_BLANK 0xff
 
-void init_display(uint8_t port, uint8_t pin);
 void clear_display(void);
+void init_display(volatile uint8_t *port, uint8_t pin);
 void setDigit(uint8_t position, uint8_t digit);
 void refresh_display(void);
+void printNumber(uint32_t number);
 
 #endif

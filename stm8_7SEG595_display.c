@@ -26,10 +26,11 @@ static const uint8_t digitTable[] =
     0b10010000  //9
 };
 
-static uint8_t latchPort = 0;
-static uint8_t latchPin = 0;
+static volatile uint8_t *latchPort;
+static uint8_t latchPin;
 static uint8_t displayBuffer[8];
 static uint8_t currentPosition = 0;
+static uint8_t a = 0;
 
 void clear_display(void) 
 {
@@ -39,7 +40,7 @@ void clear_display(void)
 	}
 }
 
-void init_display(uint8_t port, uint8_t pin)
+void init_display(volatile uint8_t *port, uint8_t pin)
 {
 	latchPort = port;
     latchPin = pin;
@@ -68,4 +69,14 @@ void refresh_display(void)
 	
 	currentPosition++;
 	if (currentPosition > 7) currentPosition = 0;
+}
+void printNumber(uint32_t number)
+{
+	while (number)
+	{
+		setDigit(a, number % 10);
+		number /= 10;
+		a++;
+	}
+	a = 0;
 }
