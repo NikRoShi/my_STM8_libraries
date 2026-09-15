@@ -6,6 +6,9 @@
 #define HIGH 1
 #define LOW 0
 
+#define ENABLE 1
+#define DISABLE 0
+
 /* ==== PORT A ==== */
 #define PA_ODR   (*(volatile unsigned char*)0x5000)
 #define PA_IDR   (*(volatile unsigned char*)0x5001)
@@ -68,6 +71,12 @@
 #define I2C_SR2_AF (1 << 2)
 
 /* ==== UART ==== */
+
+#define UART_TX_PIN 5
+#define UART_RX_PIN 6
+#define UART_TX_PORT PD
+#define UART_RX_PORT PD
+
 #define UART1_SR  (*(volatile unsigned char*)0x5230)
 #define UART1_DR  (*(volatile unsigned char*)0x5231)
 #define UART1_BRR1  (*(volatile unsigned char*)0x5232)
@@ -80,6 +89,7 @@
 #define UART1_SR_RXNE (1 << 5)
 #define UART1_CR2_TEN (1 << 3)
 #define UART1_CR2_REN (1 << 2)
+#define UART1_CR2_RIEN (1 << 5)
 
 /* ==== TIM2 ==== */
 #define TIM2_CR1  (*(volatile unsigned char*)0x5300)

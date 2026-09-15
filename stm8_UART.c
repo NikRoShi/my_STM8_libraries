@@ -1,6 +1,6 @@
 #include "stm8_UART.h"
 
-void init_UART(uint16_t baudrate)
+void init_UART(uint16_t baudrate, uint8_t rxInterrupt)
 {
 	uint16_t uartdiv;
 	
@@ -11,6 +11,9 @@ void init_UART(uint16_t baudrate)
 	
 	UART1_CR2 |= UART1_CR2_TEN;
 	UART1_CR2 |= UART1_CR2_REN;
+	
+	if (rxInterrupt = ENABLE) UART1_CR2 |= UART1_CR2_RIEN;
+	else  UART1_CR2 &= ~UART1_CR2_RIEN;
 }
 uint8_t write_UART(uint8_t data)
 {
