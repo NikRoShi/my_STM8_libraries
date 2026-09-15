@@ -12,7 +12,7 @@ void init_UART(uint16_t baudrate, uint8_t rxInterrupt)
 	UART1_CR2 |= UART1_CR2_TEN;
 	UART1_CR2 |= UART1_CR2_REN;
 	
-	if (rxInterrupt = ENABLE) UART1_CR2 |= UART1_CR2_RIEN;
+	if (rxInterrupt == ENABLE) UART1_CR2 |= UART1_CR2_RIEN;
 	else  UART1_CR2 &= ~UART1_CR2_RIEN;
 }
 uint8_t write_UART(uint8_t data)
