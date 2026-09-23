@@ -144,7 +144,6 @@
 /* ==== ITC & EXTI ==== */
 
 #define EXTI_CR1 (*(volatile unsigned char*)0x50A0)
-#define EXTI_CR2 (*(volatile unsigned char*)0x50A1)
 
 #define ITC_SPR1 (*(volatile unsigned char*)0x7F70)
 #define ITC_SPR2 (*(volatile unsigned char*)0x7F71)
