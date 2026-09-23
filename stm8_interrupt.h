@@ -4,49 +4,21 @@
 #include <stdint.h>
 #include "stm8_REG.h"
 
-#define PORTA 0
-#define PORTB 2
-#define PORTC 4
-#define PORTD 6
+#define EXTI_PORTA 0
+#define EXTI_PORTB 2
+#define EXTI_PORTC 4
+#define EXTI_PORTD 6
 
 #define FALLING_LOW 0
 #define RISING 1
 #define FALLING 2
 #define RISING_FALLING 3
 
-#define LVL0 0
+#define LVL0 2
 #define LVL1 1
-#define LVL2 2
-#define LVL3 3
+#define LVL2 0
 
-void setMode(uint8_t port, uint8_t mode);
-void setPriority(uint8_t interrupt, uint8_t level);
-
-/*	шаблон для обработчика перывания exti
-PORTA IRQ_EXTI0
-PORTB IRQ_EXTI1
-PORTC IRQ_EXTI2
-PORTD IRQ_EXTI3
-
-ЗАМЕНИТЬ ВОПРОСЫ!!!
-
-void EXTI_PORT?_IRQHandler(void) __interrupt(?)
-{
-    uint8_t port = GPIO?_IDR;
-
-    if (!(port & (1 << 0)))
-    {
-        //P?1
-    }
-    if (!(port & (1 << 1)))
-    {
-        //P?2
-    }
-    if (!(port & (1 << 2)))
-    {
-        //P?3
-    }
-}
-*/
+void set_EXTI(uint8_t port, uint8_t mode);
+void setInterruptPriority(uint8_t interrupt, uint8_t level);
 
 #endif
