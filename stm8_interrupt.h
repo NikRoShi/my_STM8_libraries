@@ -19,6 +19,6 @@
 #define LVL2 0
 
 void set_EXTI(uint8_t port, uint8_t mode);
-void setInterruptPriority(uint8_t interrupt, uint8_t level);
+void setInterruptPriority(uint8_t interrupt, uint8_t priorityLevel);
 
 #endif
