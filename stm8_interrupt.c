@@ -28,25 +28,25 @@ void set_EXTI_pin(uint8_t port, uint8_t pin)
 		case EXTI_PORTA:
 			if (EXTIPinMaskA == 0) previousStateA = PA_IDR;
 			EXTIPinMaskA |= (1 << pin);
-			PA_DDR |= (1 << pin);
+			PA_DDR &= ~(1 << pin);
 			PA_CR2 |= (1 << pin);
 			break;
 		case EXTI_PORTB:
 			if (EXTIPinMaskB == 0) previousStateB = PB_IDR;
 			EXTIPinMaskB |= (1 << pin);
-			PB_DDR |= (1 << pin);
+			PB_DDR &= ~(1 << pin);
 			PB_CR2 |= (1 << pin);
 			break;
 		case EXTI_PORTC:
 			if (EXTIPinMaskC == 0) previousStateC = PC_IDR;
 			EXTIPinMaskC |= (1 << pin);
-			PC_DDR |= (1 << pin);
+			PC_DDR &= ~(1 << pin);
 			PC_CR2 |= (1 << pin);
 			break;
 		case EXTI_PORTD:
 			if (EXTIPinMaskD == 0) previousStateD = PD_IDR;
 			EXTIPinMaskD |= (1 << pin);
-			PD_DDR |= (1 << pin);
+			PD_DDR &= ~(1 << pin);
 			PD_CR2 |= (1 << pin);
 			break;
 	}

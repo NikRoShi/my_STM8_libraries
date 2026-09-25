@@ -40,6 +40,18 @@ void clear_EXTI_pin(uint8_t port, uint8_t pin);
 void setInterruptPriority(uint8_t interrupt, uint8_t priorityLevel);
 
 /*
+=============== ШАБЛОН ВНЕШНЕГО ПРЕРЫВАНИЯ ПОРТА A ===============
+void EXTI_A_IRQHandler(void) __interrupt(IRQ_EXTI0)
+{
+	uint8_t currentStateA = 0;
+	uint8_t changedA = 0;
+	
+	currentStateA = PA_IDR;
+	changedA = previousStateA ^ currentStateA;
+	changedA &= EXTIPinMaskA;
+	EXTI_FlagA |= changedA;
+	previousStateA = currentStateA;
+}
 =============== ШАБЛОН ВНЕШНЕГО ПРЕРЫВАНИЯ ПОРТА D ===============
 void EXTI_D_IRQHandler(void) __interrupt(IRQ_EXTI3)
 {
