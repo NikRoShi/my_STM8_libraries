@@ -19,6 +19,64 @@
 #define LVL2 0
 
 void set_EXTI(uint8_t port, uint8_t mode);
+void set_EXTI_pin(uint8_t port, uint8_t pin);
+void clear_EXTI_pin(uint8_t port, uint8_t pin);
 void setInterruptPriority(uint8_t interrupt, uint8_t priorityLevel);
+
+/*
+=============== ШАБЛОН ВНЕШНЕГО ПРЕРЫВАНИЯ ПОРТА D ===============
+void EXTI_D_IRQHandler(void) __interrupt(IRQ_EXTI3)
+{
+    uint8_t currentStateD = 0;
+	uint8_t changedD = 0;
+	
+	currentStateD = PD_IDR;
+	changedD = previousStateD ^ currentStateD;
+	changedD &= EXTIPinMaskD;
+	EXTI_FlagD |= changedD;
+	previousStateD = currentStateD;
+}
+=============== ШАБЛОН ОБРАБОТЧИКА ПРЕРЫВАНИЯ ПОРТА D ===============
+if (EXTI_FlagD & (1 << 0))
+{
+	EXTI_FlagD &= ~(1 << 0);
+	
+}
+if (EXTI_FlagD & (1 << 1))
+{
+	EXTI_FlagD &= ~(1 << 1);
+	
+}
+if (EXTI_FlagD & (1 << 2))
+{
+	EXTI_FlagD &= ~(1 << 2);
+	
+}
+if (EXTI_FlagD & (1 << 3))
+{
+	EXTI_FlagD &= ~(1 << 3);
+	
+}
+if (EXTI_FlagD & (1 << 4))
+{
+	EXTI_FlagD &= ~(1 << 4);
+	
+}
+if (EXTI_FlagD & (1 << 5))
+{
+	EXTI_FlagD &= ~(1 << 5);
+	
+}
+if (EXTI_FlagD & (1 << 6))
+{
+	EXTI_FlagD &= ~(1 << 6);
+	
+}
+if (EXTI_FlagD & (1 << 7))
+{
+	EXTI_FlagD &= ~(1 << 7);
+	
+}
+*/
 
 #endif
