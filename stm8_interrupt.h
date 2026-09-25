@@ -18,6 +18,22 @@
 #define LVL1 1
 #define LVL2 0
 
+extern volatile uint8_t previousStateA;
+extern volatile uint8_t EXTIPinMaskA;
+extern volatile uint8_t EXTI_FlagA;
+
+extern volatile uint8_t previousStateB;
+extern volatile uint8_t EXTIPinMaskB;
+extern volatile uint8_t EXTI_FlagB;
+
+extern volatile uint8_t previousStateC;
+extern volatile uint8_t EXTIPinMaskC;
+extern volatile uint8_t EXTI_FlagC;
+
+extern volatile uint8_t previousStateD;
+extern volatile uint8_t EXTIPinMaskD;
+extern volatile uint8_t EXTI_FlagD;
+
 void set_EXTI(uint8_t port, uint8_t mode);
 void set_EXTI_pin(uint8_t port, uint8_t pin);
 void clear_EXTI_pin(uint8_t port, uint8_t pin);

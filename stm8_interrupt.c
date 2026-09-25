@@ -1,4 +1,5 @@
 #include "stm8_interrupt.h"
+
 volatile uint8_t previousStateA = 0;
 volatile uint8_t EXTIPinMaskA = 0;
 volatile uint8_t EXTI_FlagA = 0;
