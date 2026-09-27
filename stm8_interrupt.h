@@ -9,10 +9,10 @@
 #define EXTI_PORTC 4
 #define EXTI_PORTD 6
 
-#define FALLING_LOW 0
+//#define FALLING_LOW 0
 #define RISING 1
 #define FALLING 2
-#define RISING_FALLING 3
+//#define RISING_FALLING 3
 
 #define LVL0 2
 #define LVL1 1
