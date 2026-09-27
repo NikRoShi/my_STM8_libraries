@@ -18,92 +18,46 @@
 #define LVL1 1
 #define LVL2 0
 
-extern volatile uint8_t previousStateA;
-extern volatile uint8_t EXTIPinMaskA;
 extern volatile uint8_t EXTI_FlagA;
-
-extern volatile uint8_t previousStateB;
-extern volatile uint8_t EXTIPinMaskB;
 extern volatile uint8_t EXTI_FlagB;
-
-extern volatile uint8_t previousStateC;
-extern volatile uint8_t EXTIPinMaskC;
 extern volatile uint8_t EXTI_FlagC;
-
-extern volatile uint8_t previousStateD;
-extern volatile uint8_t EXTIPinMaskD;
 extern volatile uint8_t EXTI_FlagD;
 
 void set_EXTI(uint8_t port, uint8_t mode);
 void set_EXTI_pin(uint8_t port, uint8_t pin);
 void clear_EXTI_pin(uint8_t port, uint8_t pin);
 void setInterruptPriority(uint8_t interrupt, uint8_t priorityLevel);
+void handlerPortA(void);
+void handlerPortB(void);
+void handlerPortC(void);
+void handlerPortD(void);
 
 /*
 =============== ШАБЛОН ВНЕШНЕГО ПРЕРЫВАНИЯ ПОРТА A ===============
 void EXTI_A_IRQHandler(void) __interrupt(IRQ_EXTI0)
 {
-	uint8_t currentStateA = 0;
-	uint8_t changedA = 0;
-	
-	currentStateA = PA_IDR;
-	changedA = previousStateA ^ currentStateA;
-	changedA &= EXTIPinMaskA;
-	EXTI_FlagA |= changedA;
-	previousStateA = currentStateA;
+	handlerPortA();
+}
+=============== ШАБЛОН ВНЕШНЕГО ПРЕРЫВАНИЯ ПОРТА B ===============
+void EXTI_B_IRQHandler(void) __interrupt(IRQ_EXTI1)
+{
+	handlerPortB();
+}
+=============== ШАБЛОН ВНЕШНЕГО ПРЕРЫВАНИЯ ПОРТА C ===============
+void EXTI_C_IRQHandler(void) __interrupt(IRQ_EXTI2)
+{
+	handlerPortC();
 }
 =============== ШАБЛОН ВНЕШНЕГО ПРЕРЫВАНИЯ ПОРТА D ===============
 void EXTI_D_IRQHandler(void) __interrupt(IRQ_EXTI3)
 {
-    uint8_t currentStateD = 0;
-	uint8_t changedD = 0;
-	
-	currentStateD = PD_IDR;
-	changedD = previousStateD ^ currentStateD;
-	changedD &= EXTIPinMaskD;
-	EXTI_FlagD |= changedD;
-	previousStateD = currentStateD;
+    handlerPortD();
 }
-=============== ШАБЛОН ОБРАБОТЧИКА ПРЕРЫВАНИЯ ПОРТА D ===============
-if (EXTI_FlagD & (1 << 0))
+=============== ШАБЛОН ОБРАБОТЧИКА ПРЕРЫВАНИЯ ПОРТА A ===============
+if (EXTI_FlagA & (1 << 0))
 {
-	EXTI_FlagD &= ~(1 << 0);
-	
-}
-if (EXTI_FlagD & (1 << 1))
-{
-	EXTI_FlagD &= ~(1 << 1);
-	
-}
-if (EXTI_FlagD & (1 << 2))
-{
-	EXTI_FlagD &= ~(1 << 2);
-	
-}
-if (EXTI_FlagD & (1 << 3))
-{
-	EXTI_FlagD &= ~(1 << 3);
-	
-}
-if (EXTI_FlagD & (1 << 4))
-{
-	EXTI_FlagD &= ~(1 << 4);
-	
-}
-if (EXTI_FlagD & (1 << 5))
-{
-	EXTI_FlagD &= ~(1 << 5);
-	
-}
-if (EXTI_FlagD & (1 << 6))
-{
-	EXTI_FlagD &= ~(1 << 6);
-	
-}
-if (EXTI_FlagD & (1 << 7))
-{
-	EXTI_FlagD &= ~(1 << 7);
-	
+	EXTI_FlagA &= ~(1 << 0);
+	действие();
 }
 */
 
